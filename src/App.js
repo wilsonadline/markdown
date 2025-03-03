@@ -1,4 +1,4 @@
-import { Component, useState } from 'react';
+import { Component } from 'react';
 import './App.css';
 import { sampleText } from './sampleText';
 import ReactMarkdown from 'react-markdown';
@@ -28,14 +28,6 @@ class App extends Component {
     const text = this.state.markdownText;
     localStorage.setItem('text', text);
   }
-  
-  
-  // const renderText = text =>{
-  //   const __html = marked(text, { sanitize: true})
-  //   return { __html}
-  // } 
-
-  // const [markdownText, setMarkdownText] = useState(sampleText);
 
   handleChange = (event) => {
     this.setState({ markdownText: event.target.value });
@@ -60,7 +52,7 @@ class App extends Component {
           </div>
 
           <div className='col-sm-6'>
-          <div className="preview__scroll" style={this.style}>
+            <div className="preview__scroll htmlDiv" style={this.style}>
               <ReactMarkdown>
                 {this.state.markdownText}
               </ReactMarkdown>

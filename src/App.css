@@ -11,3 +11,11 @@ textarea {
   background-color: black !important;
   color: wheat !important ;
 }
+
+.htmlDiv {
+  color: white !important ;
+} 
+
+hr {
+  color: black !important;
+}
