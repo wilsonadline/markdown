@@ -1,3 +1,13 @@
 .container {
   margin-top: 24px;
+
+}
+
+body{
+  background-color: black;
+}
+
+textarea {
+  background-color: black !important;
+  color: wheat !important ;
 }

@@ -1,46 +1,75 @@
-import { useState } from 'react';
+import { Component, useState } from 'react';
 import './App.css';
 import { sampleText } from './sampleText';
-import { marked } from 'marked';
+import ReactMarkdown from 'react-markdown';
 
-function App() {
-  const style = {
-    height:'90vh',
+class App extends Component {
+  state = {
+    markdownText: sampleText
+  }
+
+  style = {
+    minHeight: '90vh',
+    resize: 'vertical',
+    overflow: 'auto'
+  }
+
+  componentDidMount () {
+    const text = localStorage.getItem('text');
+    if (text) {
+      this.setState({ markdownText: text });
+    }else{
+      this.setState({ markdownText: sampleText });
+
+    }
+  }
+
+  componentDidUpdate () {
+    const text = this.state.markdownText;
+    localStorage.setItem('text', text);
   }
   
   
-  const [state, setState] = useState(sampleText)
-  const handleChange = (event) => {
-    setState(event.target.value);
+  // const renderText = text =>{
+  //   const __html = marked(text, { sanitize: true})
+  //   return { __html}
+  // } 
+
+  // const [markdownText, setMarkdownText] = useState(sampleText);
+
+  handleChange = (event) => {
+    this.setState({ markdownText: event.target.value });
   }
-  console.log(state);
 
-  const renderText = text =>{
-    const __html = marked(text, { sanitize: true})
-    return { __html}
-  } 
+  handleHtmlChange = (event) => {
+    this.setState({ markdownText: event.target.value });
+  }
 
-  return (
-    <div className="App container">
-      <div className='row'>
-        <div className='col-sm-6 h-100'>
-          <textarea 
-            onChange={handleChange}
-            style={style}
-            value={state}
-            className='form-control'
-            rows="10"
-          />
-        </div>
+  render (){
+    return (
+      <div className="App container">
+        <div className='row'>
+          <div className='col-sm-6 h-100 '>
+            <textarea 
+              onChange={this.handleChange}
+              style={this.style}
+              value={this.state.markdownText}
+              className='form-control'
+              rows="10"
+            />
+          </div>
 
-        <div className='col-sm-6'>
-          <div dangerouslySetInnerHTML={ renderText(state)}>
-
+          <div className='col-sm-6'>
+          <div className="preview__scroll" style={this.style}>
+              <ReactMarkdown>
+                {this.state.markdownText}
+              </ReactMarkdown>
+            </div>
           </div>
         </div>
       </div>
-    </div>
-  );
+    );
+  }
 }
 
 export default App;
